@@ -1,19 +1,7 @@
 # Jupyter checkpoints
 .ipynb_checkpoints/
 
-# Veri setleri
-datasets/
-data/
-images/
-NIH_DATA/
 
-# Eğitim çıktı dosyaları
-outputs/
-logs/
-wandb/
-runs/
-checkpoints/
-models/
 
 # Ortam dosyaları
 env/
