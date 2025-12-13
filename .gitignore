@@ -1,60 +1,27 @@
-
-# PYTHON & ORTAM DOSYALARI (Sistem Çöpleri)
-
-__pycache__/
-*.py[cod]
-*$py.class
-.Python
-env/
-venv/
-my_env/
-.env
-
-
-# JUPYTER NOTEBOOK (Gereksiz Checkpointler)
+# Jupyter checkpoints
 
 .ipynb_checkpoints/
-*/.ipynb_checkpoints/
 
 
-# IDE AYARLARI (VSCode, PyCharm vs.)
 
-.vscode/
+
+
+
+
+# Ortam dosyaları
+
+env/
+
+venv/
+
 .idea/
-*.swp
-
-
-# İŞLETİM SİSTEMİ ÇÖPLERİ (Mac/Windows)
 
 .DS_Store
-Thumbs.db
-Desktop.ini
 
 
-# PROJEYE ÖZEL: BÜYÜK DOSYALAR (Drive'da duracaklar)
 
+# Cache
 
-# 1. Veri Klasörü 
-data/
-data/raw/
-data/processed/
+__pycache__/
 
-# 2. Modeller (Eğitilmiş .pth dosyaları)
-*.pth
-*.pt
-*.ckpt
-*.h5
-*.onnx
-models/
-src/models/*.pth
-
-# 3. Loglar ve Sonuçlar (Kaggle çıktıları)
-logs/
-*.log
-*.csv
-!src/utils/config.py  # Config dosyasını silme, o lazım!
-
-# 4. Sıkıştırılmış Dosyalar
-*.zip
-*.tar.gz
-*.rar
+*.pyc
