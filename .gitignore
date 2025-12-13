@@ -1,27 +1,67 @@
-# Jupyter checkpoints
-
-.ipynb_checkpoints/
-
-
-
-
-
-
-
-# Ortam dosyaları
-
-env/
-
-venv/
-
-.idea/
-
-.DS_Store
-
-
-
-# Cache
-
+# ------------------------------------------------
+# PYTHON & ORTAM DOSYALARI (Sistem Çöpleri)
+# ------------------------------------------------
 __pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+my_env/
+.env
 
-*.pyc
+# ------------------------------------------------
+# JUPYTER NOTEBOOK (Gereksiz Checkpointler)
+# ------------------------------------------------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ------------------------------------------------
+# IDE AYARLARI (VSCode, PyCharm vs.)
+# ------------------------------------------------
+.vscode/
+.idea/
+*.swp
+
+# ------------------------------------------------
+# İŞLETİM SİSTEMİ ÇÖPLERİ (Mac/Windows)
+# ------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------
+# PROJEYE ÖZEL: BÜYÜK DOSYALAR (Drive'da duracaklar)
+# ------------------------------------------------
+
+# 1. Veri Klasörü (40GB veriyi repoya atma!)
+data/
+data/raw/
+data/processed/
+
+# 2. Modeller (Eğitilmiş .pth dosyaları)
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.onnx
+models/
+src/models/*.pth
+
+# 3. Loglar ve Sonuçlar (Kaggle çıktıları)
+logs/
+*.log
+*.csv
+!src/utils/config.py  # Config dosyasını silme, o lazım!
+
+# 4. Sıkıştırılmış Dosyalar
+*.zip
+*.tar.gz
+*.rar
+
+# ------------------------------------------------
+# Raporlar (PDF ve PPTX Drive'da durur)
+# ------------------------------------------------
+*.pdf
+*.pptx
+*.docx
