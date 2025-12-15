@@ -34,10 +34,8 @@ Desktop.ini
 # PROJEYE ÖZEL: BÜYÜK DOSYALAR (Drive'da duracaklar)
 # ------------------------------------------------
 
-# 1. Veri Klasörü (40GB veriyi repoya atma!)
-data/
-data/raw/
-data/processed/
+# 1. Veri Klasörü 
+
 
 # 2. Modeller (Eğitilmiş .pth dosyaları)
 *.pth
@@ -45,23 +43,16 @@ data/processed/
 *.ckpt
 *.h5
 *.onnx
-models/
-src/models/*.pth
+
+
 
 # 3. Loglar ve Sonuçlar (Kaggle çıktıları)
-logs/
-*.log
-*.csv
 !src/utils/config.py  # Config dosyasını silme, o lazım!
 
-# 4. Sıkıştırılmış Dosyalar
-*.zip
-*.tar.gz
-*.rar
+
 
 # ------------------------------------------------
 # Raporlar (PDF ve PPTX Drive'da durur)
 # ------------------------------------------------
-*.pdf
 *.pptx
 *.docx
