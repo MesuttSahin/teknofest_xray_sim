@@ -1,85 +1,68 @@
+import sys
+import os
 import torchvision.transforms as transforms
 
-IMAGENET_MEAN = [0.485, 0.456, 0.406]
+# ---------------------------------------------------------
+# 1. CONFIG BAĞLANTISI
+# ---------------------------------------------------------
+# src/utils/config.py dosyasını görebilmek için yol ekliyoruz
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from src.utils import config
 
+# ImageNet standartları (Değişmez sabitler olduğu için burada kalabilir)
+IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
-IMAGE_SIZE = 224 # (224, 224) tuple yerine tek bir int kullanılıyor
-
-
-
 def get_transforms(mode: str) -> transforms.Compose:
-
     """
-
-    Verilen moda göre uygun ön işleme ve veri artırma borusunu döndürür.
-
+    Verilen moda (train/val) göre ön işleme borusunu hazırlar.
     """
-
-
-
-    # Resize, 224x224 kare boyutuna getirir.
-
-    resize_transform = transforms.Resize((IMAGE_SIZE, IMAGE_SIZE))
-
     
-
-    # Normalizasyon, ImageNet beklentisini karşılar.
-
+    # ---------------------------------------------------------
+    # 2. CONFIG'DEN BOYUT ÇEKME (DÜZELTME)
+    # ---------------------------------------------------------
+    # Elle 224 yazmak yerine config dosyasındaki ayarı kullanıyoruz.
+    resize_transform = transforms.Resize(config.IMAGE_SIZE)
+    
+    # Normalizasyon
     normalize_transform = transforms.Normalize(
-
         mean=IMAGENET_MEAN,
-
         std=IMAGENET_STD
-
     )
 
-
-
     if mode == 'train':
-
-        # Train Modu: Veri Artırma içerir (Data Augmentation)
-
-        train_transforms = transforms.Compose([
-
+        # Train Modu: Veri Artırma (Data Augmentation) VAR
+        return transforms.Compose([
             resize_transform,
-
-            # Data Augmentation:
-
-            transforms.RandomHorizontalFlip(), # Rastgele Yatay Çevirme
-
-            transforms.RandomRotation(degrees=10), # ±10 derece Rastgele Döndürme
-
-            # Tensöre Çevirme ve [0, 1] aralığına ölçekleme (HWC -> CHW)
-
-            transforms.ToTensor(), 
-
-            normalize_transform,
-
-        ])
-
-        return train_transforms
-
-        
-
-    elif mode == 'val':
-
-        # Val Modu: Sadece Standart Dönüşümler (Ölçüm için)
-
-        val_transforms = transforms.Compose([
-
-            resize_transform,
-
+            transforms.RandomHorizontalFlip(p=0.5), # %50 ihtimalle çevir
+            transforms.RandomRotation(degrees=10),  # +/- 10 derece döndür
             transforms.ToTensor(),
-
             normalize_transform,
-
         ])
-
-        return val_transforms
-
         
-
+    elif mode == 'val':
+        # Val Modu: Sadece Boyutlandırma ve Normalizasyon
+        return transforms.Compose([
+            resize_transform,
+            transforms.ToTensor(),
+            normalize_transform,
+        ])
+        
     else:
+        raise ValueError(f"Hatalı mod: '{mode}'. Sadece 'train' veya 'val' olabilir.")
 
-        raise ValueError(f"Bilinmeyen mod: '{mode}'. Lütfen 'train' veya 'val' kullanın.")
+# ---------------------------------------------------------
+# 3. SMOKE TEST (Duman Testi)
+# ---------------------------------------------------------
+# Bu dosya tek başına çalıştırılırsa transformları ekrana basar.
+if __name__ == "__main__":
+    print(f"🔧 Transform Testi Başladı...")
+    try:
+        train_t = get_transforms('train')
+        print(f"✅ Train Transform Zinciri:\n{train_t}")
+        print("-" * 30)
+        val_t = get_transforms('val')
+        print(f"✅ Val Transform Zinciri:\n{val_t}")
+        print("\n🎉 BAŞARILI: Transformlar config ile uyumlu çalışıyor.")
+    except Exception as e:
+        print(f"❌ HATA: {e}")
