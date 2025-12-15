@@ -3,50 +3,38 @@ import torch
 import random
 import numpy as np
 
+# 1. AYARLAR
+SEED = 42
+BATCH_SIZE = 16
+IMAGE_SIZE = (224, 224)
+NUM_CLASSES = 14
+LEARNING_RATE = 1e-4
+NUM_EPOCHS = 5
+NUM_WORKERS = 2  # Windows'ta hata verirse bunu 0 yap
 
-#  AYARLAR
-
-SEED = 42                # Şans faktörünü ortadan kaldırır
-BATCH_SIZE = 16          # Her seferde GPU'ya girecek resim sayısı
-IMAGE_SIZE = (224, 224)  # Resimlerin getirileceği boyut
-NUM_CLASSES = 14         # Hastalık sayısı
-LEARNING_RATE = 1e-4     # Öğrenme hızı
-NUM_EPOCHS = 5           # Kaç tur eğitim yapılacağı
-NUM_WORKERS = 2          # Veri yüklerken çalışacak işlemci çekirdeği (Kaggle'da 4 yap)
+# DOSYA YOLLARI 
 
 
-#DOSYA YOLLARI (PATHS)
+CURRENT_FILE_PATH = os.path.abspath(__file__) # config.py'nin yeri
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(CURRENT_FILE_PATH)))
 
-# Eğer Drive bağlıysa orayı, değilse local klasörü gösterir
-if os.path.exists('/content/drive'):
-    BASE_PATH = '/content/drive/MyDrive/TEKNOFEST_XRAY_2025'
-else:
-    BASE_PATH = './data'  # Senin bilgisayarındaki yol
+BASE_PATH = os.path.join(PROJECT_ROOT, 'data')
 
 RAW_DATA_DIR = os.path.join(BASE_PATH, 'raw')
 PROCESSED_DATA_DIR = os.path.join(BASE_PATH, 'processed')
-MODEL_OUTPUT_DIR = os.path.join(BASE_PATH, 'models')
-LOGS_DIR = os.path.join(BASE_PATH, 'logs')
+MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models') # Modeller ana dizindeki models'e
+LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
 
-# Hastalık İsimleri (Kaggle NIH Verisinden)
 CLASS_NAMES = [
     'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass',
     'Nodule', 'Pneumonia', 'Pneumothorax', 'Consolidation', 'Edema',
     'Emphysema', 'Fibrosis', 'Pleural_Thickening', 'Hernia'
 ]
 
-
-# Ekran kartı varsa onu seç, yoksa işlemciyi seç
+#CİHAZ & SEED
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-
-#  SEED SABİTLEME FONKSİYONU
-
 def seed_everything(seed=42):
-    """
-    Tüm kütüphanelerin rastgele sayı üreteçlerini sabitler.
-    Böylece deney tekrarlanabilir (Reproducible) olur.
-    """
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -56,5 +44,4 @@ def seed_everything(seed=42):
     torch.backends.cudnn.benchmark = False
     print(f"[INFO] Random Seed sabitlendi: {seed}")
 
-# Config dosyası import edildiğinde otomatik seed'i sabitle
 seed_everything(SEED)
