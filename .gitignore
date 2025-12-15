@@ -1,5 +1,5 @@
 # ------------------------------------------------
-# PYTHON & ORTAM DOSYALARI (Sistem Çöpleri)
+# 1. PYTHON & ORTAM (Sistem Çöpleri)
 # ------------------------------------------------
 __pycache__/
 *.py[cod]
@@ -11,48 +11,65 @@ my_env/
 .env
 
 # ------------------------------------------------
-# JUPYTER NOTEBOOK (Gereksiz Checkpointler)
-# ------------------------------------------------
-.ipynb_checkpoints/
-*/.ipynb_checkpoints/
-
-# ------------------------------------------------
-# IDE AYARLARI (VSCode, PyCharm vs.)
+# 2. IDE & EDİTÖR AYARLARI
 # ------------------------------------------------
 .vscode/
 .idea/
 *.swp
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
 
 # ------------------------------------------------
-# İŞLETİM SİSTEMİ ÇÖPLERİ (Mac/Windows)
+# 3. İŞLETİM SİSTEMİ ÇÖPLERİ
 # ------------------------------------------------
 .DS_Store
 Thumbs.db
 Desktop.ini
 
-# ------------------------------------------------
-# PROJEYE ÖZEL: BÜYÜK DOSYALAR (Drive'da duracaklar)
-# ------------------------------------------------
+# ================================================
+# 4. DATA KLASÖRÜ (KRİTİK AYARLAR) 🚨
+# ================================================
 
-# 1. Veri Klasörü 
+# Kural A: data klasöründeki HER ŞEYİ yoksay
+data/*
 
+# Kural B: Ama klasörlerin kendisine izin ver (içine bakabilsin)
+!data/**/
 
-# 2. Modeller (Eğitilmiş .pth dosyaları)
-*.pth
-*.pt
-*.ckpt
+# Kural C: CSV dosyalarına İZİN VER (Train/Val listeleri ve Mini dataset için)
+!data/**/*.csv
+
+# Kural D: Resimleri ve Arşivleri ASLA alma (Çifte Garanti)
+# (Kural C'ye rağmen yanlışlıkla resim eklenmesini engeller)
+data/**/*.png
+data/**/*.jpg
+data/**/*.jpeg
+data/**/*.bmp
+data/**/*.zip
+data/**/*.tar.gz
+data/**/*.rar
+
+# ================================================
+# 5. MODEL & ÇIKTILAR (Büyük Dosyalar)
+# ================================================
+
+# Modeller (Eğitilmiş yapay zeka dosyaları GitHub'a sığmaz)
+models/*.pth
+models/*.pt
+models/*.ckpt
 *.h5
 *.onnx
 
+# Loglar ve Grafikler (İsteğe bağlı, genelde kalabalık yapmasın diye atılmaz)
+logs/
+!logs/.gitkeep
 
-
-# 3. Loglar ve Sonuçlar (Kaggle çıktıları)
-!src/utils/config.py  # Config dosyasını silme, o lazım!
-
-
-
-# ------------------------------------------------
-# Raporlar (PDF ve PPTX Drive'da durur)
-# ------------------------------------------------
+# Rapor taslakları
 *.pptx
 *.docx
+
+# ------------------------------------------------
+# 6. KORUNACAK DOSYALAR (Silinmesin)
+# ------------------------------------------------
+# Config dosyasını yanlışlıkla ignore listesine alma!
+!src/utils/config.py
