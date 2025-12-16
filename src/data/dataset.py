@@ -7,40 +7,44 @@ import os
 
 from src.utils import config
 
+
 class ChestXRayDataset(Dataset):
     def __init__(self, csv_file, transform=None):
         # Generic olması için dosya yolu belirtmiyorum, dışarıdan gelecek.
-        self.data = pd.read_csv(csv_file) 
-        
+        self.data = pd.read_csv(csv_file)
+
         # Kırpma veya Döndürme için koyduk EĞER yapılacaksa şart değil.
-        self.transform = transform 
-        
+        self.transform = transform
+
         # Hasta listesini direkt config.py'den düzenleyebiliriz listeyi ordan çekiyoruz.
-        self.class_names = config.CLASS_NAMES 
+        self.class_names = config.CLASS_NAMES
 
     def __len__(self):
         # CSV dosyasındaki satır sayısı kadar uzunluk belirledik.
-        return len(self.data) 
+        return len(self.data)
 
     def __getitem__(self, indeks):
         # Sıradaki satırı seçiyor.
-        row = self.data.iloc[indeks] 
+        row = self.data.iloc[indeks]
         img_name = row['Image Index']
-        
+
         # Config'den gelen klasör yolu ile resim adını birleştiriyoruz sanırım böyle doğru oldu kontrol gerekebilir.
-        img_path = os.path.join(config.RAW_DATA_DIR, img_name)
-        
+        img_path = os.path.join(config.RAW_DATA_DIR, 'images', img_name)
+
         try:
             # Resmi açıyoruz aynı zamanda RGB dönüşümü hata almamak için farz.
-            image = Image.open(img_path).convert('RGB') 
+            image = Image.open(img_path).convert('RGB')
         except Exception as e:
-            print(f"Hata: Resim okunamadı -> {img_path}")
+            # Hata alırsan tam olarak nereye baktığını görmek için yolu yazdırıyoruz
+            print(f"❌ HATA: Resim okunamadı!")
+            print(f"   Aranan Yol: {img_path}")
+            print(f"   Klasör yapısını kontrol et: 'data/raw/images' var mı?")
             raise e
 
         # Transform (Resize, Normalize vb.)
         if self.transform:
             # 224x224'e küçültmek genelde öyleymiş VEYA Tensöre çevirmek için kullandık.
-            image = self.transform(image) 
+            image = self.transform(image)
 
         label_string = row['Finding Labels']  # Örn: "Atelectasis|Effusion"
 
@@ -48,7 +52,8 @@ class ChestXRayDataset(Dataset):
         # Config'deki hastalık sayısı değişirse de bu sayede o kadar uzunluğa sahip olacağız.
         label_vector = np.zeros(len(self.class_names), dtype=np.float32)
 
-        diseases = label_string.split('|') #Bizim veri setinde birden fazla hastalığı olanları gösterirken diğer hastalığı bu şekilde ayırmış  
+        diseases = label_string.split(
+            '|')  # Bizim veri setinde birden fazla hastalığı olanları gösterirken diğer hastalığı bu şekilde ayırmış
 
         for disease in diseases:
             # Config'deki listede bu hastalık varsa indeksini 1 yap
