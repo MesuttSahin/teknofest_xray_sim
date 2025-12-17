@@ -1,0 +1,1 @@
+Model eğitimi sırasında tamamlanmaya çalışan epoch'ların tamamlanma sürelerinin çok uzadığını fark ettim. Sonrasında model eğitiminin GPU'ya değil de CPU'ya bağlı çalıştığını fark ettim. NVİDİA CUDA'yı indirirek pyTorch'umun gpu'ya bağlı çalışmasını sağladım

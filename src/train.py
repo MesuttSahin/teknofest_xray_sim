@@ -13,7 +13,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 # Modülleri çağır
 from src.utils import config
 from src.data.dataset import ChestXRayDataset
-from src.utils import plot_loss_curves  # Analistin fonksiyonu buradan geliyor
+from src.utils.plots import plot_loss_curves  # Analistin fonksiyonu buradan geliyor
 from src.models.model import ChestXRayResNet as ModelClass # Model Mimarı burayı düzenlemeli dikkat 
 
 def train():    
