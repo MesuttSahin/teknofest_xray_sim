@@ -11,7 +11,7 @@ NUM_CLASSES = 14
 LEARNING_RATE = 1e-4
 NUM_EPOCHS = 5
 NUM_WORKERS = 2  # Windows'ta hata verirse bunu 0 yap
-
+RAW_DATA_DIR = 'data/raw'
 # DOSYA YOLLARI 
 
 
