@@ -60,9 +60,7 @@ models/*.ckpt
 *.h5
 *.onnx
 
-# Loglar ve Grafikler (İsteğe bağlı, genelde kalabalık yapmasın diye atılmaz)
-logs/
-!logs/.gitkeep
+
 
 # Rapor taslakları
 *.pptx
