@@ -1,4 +1,5 @@
 1. Bugün Ne Yaptım?
+
 Kütüphane ve Ortam Kurulumu: Eksik olan torch, torchvision, numpy gibi kritik kütüphaneleri "System Interpreter" (Python 3.10) üzerine başarıyla kurdum ve GPU (CUDA) erişimini teyit ettim.
 
 Evaluate.py Dosyasının Oluşturulması: Analist için gerekli olan model değerlendirme script’ini yazdım.
@@ -14,6 +15,8 @@ Veri İhracı: Tahminleri (predictions.npy) ve gerçek etiketleri (true_labels.n
 Overfitting Analizi: src/data/transforms.py dosyasını inceleyerek modelin ezberlemesini önleyecek "Reçete"yi (RandomRotation artırımı ve ColorJitter eklenmesi) hazırladım.
 
 2. Karşılaşılan Hatalar ve Çözümler
+
+   
 Hata: ModuleNotFoundError: No module named 'src'
 
 Çözüm: Python'ın çalışma dizinini tanıması için $env:PYTHONPATH = "." komutu ile projenin kök dizinini sisteme tanıttık.
@@ -31,6 +34,8 @@ Hata: Pip Version Warning
 Çözüm: Pip aracını son sürüme güncelleyerek kurulum hatalarının önüne geçtik.
 
 3. Sonuç
+
+   
 Analiz Hazır: Veri Analisti'nin ROC eğrisi ve performans metriklerini hesaplaması için gerekli olan tüm veriler logs/ altında başarıyla oluşturuldu.
 
 Sistem Hazır: GPU desteği aktif edildi ve projenin klasör yapısı ile kod arasındaki "Import" sorunları tamamen çözüldü.
