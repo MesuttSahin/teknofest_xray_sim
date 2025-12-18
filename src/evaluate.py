@@ -31,7 +31,7 @@ def evaluate():
     # 1. Modeli Hazırla
     model = ChestXRayResNet().to(device)
     # Kritik: Validation hatasının en düşük olduğu epoch'u seç
-    model_path = 'models/ep1.pth'
+    model_path = 'models/chest_xray_model_ep1.pth'
     if os.path.exists(model_path):
         model.load_state_dict(torch.load(model_path))
         print(f"✅ Model yüklendi: {model_path}")
