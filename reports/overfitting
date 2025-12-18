@@ -1,0 +1,18 @@
+Model Mimarı: Overfitting Analiz Raporu
+
+Mavi çizgi(train) sürekli düşüyorken  turuncu çizgi(val) 1. epochtan sonra yükseliyor ve bu şekilde çizgilerin sürekli birbirinden uzaklaşması modelimizin anlamak yerine ezberlemeyi tercih ettiğini anlıyoruz.
+ 
+
+Neden Oldu?: Modelin veri setindeki gürültüleri ve spesifik detayları öğrenecek kadar karmaşık (yüksek parametreli) olması veya eğitim verisinin modelin genelleme yapabilmesi için yeterli çeşitliliğe sahip olmaması bu duruma yol açmıştır.
+
+Çözüm Ne?: Eğitim setine daha fazla varyasyon eklemek için Data Augmentation (veriyi zenginleştirme) artırılmalı, modelin belirli nöronlara aşırı güvenmesini engellemek için Dropout katmanları eklenmeli ve doğrulama hatası artmaya başladığında eğitimi durduran Early Stopping mekanizması devreye alınmalıdır.
+
+  Teknik Notlar:
+
+Araştırmalarımıza göre derin öğrenmede bu sorunu çözmek için şu "altın kuralları" yarınki eğitimde (5. Gün) uygulayabiliriz:
+
+Data Augmentation (Veri Artırma): Görüntüleri döndürme, yatay çevirme veya parlaklık değiştirme gibi işlemler, modelin aynı resmi her seferinde farklı görmesini sağlayarak ezberlemesini imkansız hale getirir.
+
+Dropout (Nöron Devre Dışı Bırakma): Eğitim sırasında nöronların belirli bir kısmını rastgele "kapatmak", ağın daha dayanıklı ve bağımsız özellikler öğrenmesini sağlar.
+
+Early Stopping (Erken Durdurma): Mavi çizgi düşerken turuncu çizgi yükselmeye başladığı o kritik "kırılma noktasında" eğitimi otomatik keserek en iyi haliyle modeli kaydetmektir.
