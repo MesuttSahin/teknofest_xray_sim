@@ -1,4 +1,8 @@
 Model Mimarı: Overfitting Analiz Raporu
+
+Mavi çizgi(train) sürekli düşüyorken  turuncu çizgi(val) 1. epochtan sonra yükseliyor ve bu şekilde çizgilerin sürekli birbirinden uzaklaşması modelimizin anlamak yerine ezberlemeyi tercih ettiğini anlıyoruz.
+ 
+
 Neden Oldu?: Modelin veri setindeki gürültüleri ve spesifik detayları öğrenecek kadar karmaşık (yüksek parametreli) olması veya eğitim verisinin modelin genelleme yapabilmesi için yeterli çeşitliliğe sahip olmaması bu duruma yol açmıştır.
 
 Çözüm Ne?: Eğitim setine daha fazla varyasyon eklemek için Data Augmentation (veriyi zenginleştirme) artırılmalı, modelin belirli nöronlara aşırı güvenmesini engellemek için Dropout katmanları eklenmeli ve doğrulama hatası artmaya başladığında eğitimi durduran Early Stopping mekanizması devreye alınmalıdır.
