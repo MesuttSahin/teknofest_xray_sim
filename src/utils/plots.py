@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-def plot_loss_curves(train_loss, val_loss, save_path="logs/loss_curve.png"):
+def plot_loss_curves(train_loss, val_loss, save_path="logs/loss_curve_ChestXrayModel.png"):
     """
     Eğitim ve Doğrulama kayıp (loss) değerlerini çizer ve kaydeder.
     """
