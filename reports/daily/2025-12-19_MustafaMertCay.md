@@ -10,6 +10,8 @@ Veri Artırma (Data Augmentation) Entegrasyonu: transforms.py dosyasındaki Rand
 Dengeli Öğrenme Stratejisi Uyguladım: Analistten gelen ve nadir hastalıklar için (örneğin Hernia için 494.88) yüksek ceza puanları içeren pos_weight listesini BCEWithLogitsLoss fonksiyonuna tanımladım.
 
 Eğitim Yönetimi: Öğrenme hızını (Learning Rate) takip eden ReduceLROnPlateau scheduler’ı ve ağırlık aşınması (Weight Decay) sağlayan AdamW optimizer’ı devreye aldım.
+
+Hassas Eğitim (Fine-Tuning): Öğrenme hızını $1e-5$ yaparak modelin ağırlıklarını santim santim, en doğru noktaya yerleştirdim.
  
      2. Karşılaşılan Hatalar ve Çözümler
 
@@ -21,8 +23,13 @@ Hata (Stabilite Kaybı): Eğitim sırasında Val Loss’ta ani sıçramalar (Epo
 
 Çözüm: Scheduler ve Dropout mekanizmalarının yardımıyla modelin sakinleşmesini bekledim; 4. epoch’tan itibaren Val Loss tekrar 1.31 seviyelerine düşerek stabilize oldu.
 
-        3. Sonuç
-   
-V2 Eğitim Başarısı: İkinci tur eğitim (V2) sonucunda modelin ezber yapmadan, hem eğitim hem doğrulama setinde tutarlı bir performans sergilemesini sağladım.
+Sorun: Önceki yüksek öğrenme hızında model hedefi ıskalıyor ve Val Loss dalgalanıyordu.
 
-En İyi Model Tespiti: 10 epoch süren eğitimde, en düşük hata oranına (Val Loss: 1.3118) sahip olan v2_model_ep7.pth dosyasını "En İyi Model" olarak belirledim.
+Çözüm: LR düşürerek modeli "sakinleştirdim". Sonuçta dalgalanma bitti ve stabil bir iniş sağlandı.
+
+
+        3. Sonuç
+
+Şampiyon Model: chest_xray_model_ep7.pth dosyası (Val Loss: 1.3008) projenin nihai en iyi modeli olarak tescillenmiştir.
+
+Sistem Durumu: Eğitim 10 epoch boyunca hiçbir sapma göstermeden başarıyla tamamlandı.
