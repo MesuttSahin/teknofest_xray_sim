@@ -22,7 +22,7 @@ BASE_PATH = os.path.join(PROJECT_ROOT, 'data')
 
 RAW_DATA_DIR = os.path.join(BASE_PATH, 'raw')
 PROCESSED_DATA_DIR = os.path.join(BASE_PATH, 'processed')
-MODEL_SRC_DIR = os.path.join(PROJECT_ROOT, 'src', 'models')
+MODEL_SRC_DIR = os.path.join(PROJECT_ROOT,'models')
 BEST_MODEL_PATH = os.path.join(MODEL_SRC_DIR, 'best_model.pth')
 MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models') # Modeller ana dizindeki models'e
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
