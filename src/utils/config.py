@@ -10,7 +10,7 @@ IMAGE_SIZE = (224, 224)
 NUM_CLASSES = 14
 
 # Fine-Tuning (İnce Ayar) için LR düşürülür, Epoch artırılır
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 0.00001
 NUM_EPOCHS = 10       # Model dondurulduğu için daha uzun süre eğitebiliriz (Eski: 5)
 NUM_WORKERS = 2       # Windows'ta hata alırsan 0 yap
 
