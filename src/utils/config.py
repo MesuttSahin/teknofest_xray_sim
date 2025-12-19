@@ -22,8 +22,6 @@ BASE_PATH = os.path.join(PROJECT_ROOT, 'data')
 
 RAW_DATA_DIR = os.path.join(BASE_PATH, 'raw')
 PROCESSED_DATA_DIR = os.path.join(BASE_PATH, 'processed')
-MODEL_SRC_DIR = os.path.join(PROJECT_ROOT,'models')
-BEST_MODEL_PATH = os.path.join(MODEL_SRC_DIR, 'best_model.pth')
 MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models') # Modeller ana dizindeki models'e
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
 
@@ -47,3 +45,8 @@ def seed_everything(seed=42):
     print(f"[INFO] Random Seed sabitlendi: {seed}")
 
 seed_everything(SEED)
+# POS_WEIGHTS = [np.float64(7.4), np.float64(38.28), np.float64(6.84), np.float64(4.01), np.float64(17.71), np.float64(15.33), np.float64(60.03), np.float64(22.47), np.float64(20.8), np.float64(45.67), np.float64(39.07), np.float64(69.84), np.float64(31.52), np.float64(494.88)]
+POS_WEIGHTS = [
+    7.40, 38.28, 6.84, 4.01, 17.71, 15.33, 60.03,
+    22.47, 20.80, 45.67, 39.07, 69.84, 31.52, 494.88
+]
