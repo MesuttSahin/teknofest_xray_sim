@@ -3,27 +3,30 @@ import torch
 import random
 import numpy as np
 
-# 1. AYARLAR
+
 SEED = 42
-BATCH_SIZE = 16
+BATCH_SIZE = 16       # VRAM yetmezse 8 yapabilirsin
 IMAGE_SIZE = (224, 224)
 NUM_CLASSES = 14
+
+# Fine-Tuning (İnce Ayar) için LR düşürülür, Epoch artırılır
 LEARNING_RATE = 1e-4
-NUM_EPOCHS = 5
-NUM_WORKERS = 2  # Windows'ta hata verirse bunu 0 yap
-RAW_DATA_DIR = 'data/raw'
-# DOSYA YOLLARI 
+NUM_EPOCHS = 10       # Model dondurulduğu için daha uzun süre eğitebiliriz (Eski: 5)
+NUM_WORKERS = 2       # Windows'ta hata alırsan 0 yap
 
 
-CURRENT_FILE_PATH = os.path.abspath(__file__) # config.py'nin yeri
+CURRENT_FILE_PATH = os.path.abspath(__file__)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(CURRENT_FILE_PATH)))
 
 BASE_PATH = os.path.join(PROJECT_ROOT, 'data')
-
 RAW_DATA_DIR = os.path.join(BASE_PATH, 'raw')
 PROCESSED_DATA_DIR = os.path.join(BASE_PATH, 'processed')
-MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models') # Modeller ana dizindeki models'e
+MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models')
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
+
+
+BEST_MODEL_PATH = os.path.join(MODEL_OUTPUT_DIR, 'v2_best_model.pth')
+
 
 CLASS_NAMES = [
     'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass',
@@ -31,7 +34,7 @@ CLASS_NAMES = [
     'Emphysema', 'Fibrosis', 'Pleural_Thickening', 'Hernia'
 ]
 
-#CİHAZ & SEED
+
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def seed_everything(seed=42):
@@ -45,7 +48,18 @@ def seed_everything(seed=42):
     print(f"[INFO] Random Seed sabitlendi: {seed}")
 
 seed_everything(SEED)
-# POS_WEIGHTS = [np.float64(7.4), np.float64(38.28), np.float64(6.84), np.float64(4.01), np.float64(17.71), np.float64(15.33), np.float64(60.03), np.float64(22.47), np.float64(20.8), np.float64(45.67), np.float64(39.07), np.float64(69.84), np.float64(31.52), np.float64(494.88)]
+
+
+
+# A) SCHEDULER (Öğrenme Hızı Planlayıcı)
+# Validation loss düşmezse Learning Rate'i küçült
+SCHEDULER_PATIENCE = 2   # 2 epoch boyunca iyileşme olmazsa...
+SCHEDULER_FACTOR = 0.1   # LR'yi 10'a böl (0.0001 -> 0.00001)
+
+#  EARLY STOPPING (Erken Durdurma)
+EARLY_STOPPING_PATIENCE = 5
+
+# Hernia (494.88) gibi nadir sınıflar için ceza puanları
 POS_WEIGHTS = [
     7.40, 38.28, 6.84, 4.01, 17.71, 15.33, 60.03,
     22.47, 20.80, 45.67, 39.07, 69.84, 31.52, 494.88
