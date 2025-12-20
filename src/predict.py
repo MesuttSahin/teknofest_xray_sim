@@ -40,7 +40,7 @@ def load_model(model_path):
 
     print(f"[INFO] Model mimarisi hazırlanıyor ve ağırlıklar yükleniyor...")
 
-    # 1. Model Mimarisi (ResNet50) - Pretrained False çünkü kendi ağırlıklarımızı yükleyeceğiz
+    # 1. Model Mimarisi (ResNet50)
     model = models.resnet50(weights=None)
     model.fc = nn.Linear(model.fc.in_features, config.NUM_CLASSES)
 
@@ -48,15 +48,25 @@ def load_model(model_path):
         # 2. Ağırlıkları Yükle
         state_dict = torch.load(model_path, map_location=config.DEVICE)
 
-        # --- FIX: 'model.' önekini temizleme ---
-        # Eğer model DataParallel veya Lightning ile eğitildiyse key'lerin başında 'model.' olabilir.
+        # --- FIX: Key İsimlerini Düzeltme ---
         new_state_dict = OrderedDict()
         for k, v in state_dict.items():
-            name = k[6:] if k.startswith('model.') else k
+            name = k
+
+            # 1. 'model.' önekini temizle (Varsa)
+            if name.startswith('model.'):
+                name = name[6:]
+
+            # 2. 'fc.1.' sorununu düzelt (fc.1.weight -> fc.weight)
+            # Eğitimde Sequential kullandığın için fc.1 olmuş, bunu fc yapıyoruz.
+            if "fc.1." in name:
+                name = name.replace("fc.1.", "fc.")
+
             new_state_dict[name] = v
         # ---------------------------------------
 
-        model.load_state_dict(new_state_dict)
+        # strict=False yapmıyoruz ki gerçekten doğru yüklediğinden emin olalım
+        model.load_state_dict(new_state_dict, strict=True)
         print(f"✅ Model başarıyla yüklendi: {model_path}")
 
     except FileNotFoundError:
@@ -64,10 +74,11 @@ def load_model(model_path):
         exit(1)
     except Exception as e:
         print(f"❌ Model yüklenirken beklenmedik hata: {e}")
+        # Detay görmek için hatayı tekrar fırlatabiliriz veya exit
         exit(1)
 
     model.to(config.DEVICE)
-    model.eval()  # DİKKAT: Modeli değerlendirme moduna alıyoruz (Dropout/Batchnorm sabitlenir)
+    model.eval()
     return model
 
 

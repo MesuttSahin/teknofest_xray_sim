@@ -9,7 +9,7 @@ class ChestXRayResNet(nn.Module):
         super(ChestXRayResNet, self).__init__()
 
         # ResNet50'yi önceden eğitilmiş ağırlıklarla yükle
-        self.model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+        self.model = models.resnet50(weights=None)
 
         # --- A. Dondurma (Freezing) İşlemi ---
         # Layer4 ve FC hariç her şeyi dondur (Kapasite kısıtlama)
