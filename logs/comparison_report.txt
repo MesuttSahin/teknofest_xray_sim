@@ -1,0 +1,35 @@
+[INFO] Random Seed sabitlendi: 42
+[INFO] Random Seed sabitlendi: 42
+[INFO] Random Seed sabitlendi: 42
+[INFO] Random Seed sabitlendi: 42
+[INFO] Random Seed sabitlendi: 42
+[INFO] Using device: cpu
+[INFO] Loading model from D:\Documents\GitHub\teknofest_xray_sim\models\best_model.pth...
+[INFO] Detected V1 architecture (No Dropout in FC). Adjusting model...
+[INFO] Evaluating model...
+[INFO] Loading model from D:\Documents\GitHub\teknofest_xray_sim\models\v2_model_ep7.pth...
+[INFO] Evaluating model...
+[INFO] Plotting comparison to D:\Documents\GitHub\teknofest_xray_sim\logs\comparison.png...
+[INFO] Plot saved.
+
+========================================
+      MODEL COMPARISON REPORT      
+========================================
+Disease              | V1 F1      | V2 F1      | Diff      
+----------------------------------------------------------
+Atelectasis          | 0.0702     | 0.2392     | +0.1690    << IMPROVED
+Cardiomegaly         | 0.0000     | 0.0986     | +0.0986    << IMPROVED
+Effusion             | 0.3556     | 0.3522     | -0.0034   
+Infiltration         | 0.1564     | 0.3855     | +0.2292    << IMPROVED
+Mass                 | 0.0000     | 0.1757     | +0.1757    << IMPROVED
+Nodule               | 0.0000     | 0.1705     | +0.1705    << IMPROVED [TARGET]
+Pneumonia            | 0.0000     | 0.0153     | +0.0153   
+Pneumothorax         | 0.0000     | 0.1876     | +0.1876    << IMPROVED
+Consolidation        | 0.0000     | 0.1574     | +0.1574    << IMPROVED
+Edema                | 0.0000     | 0.1002     | +0.1002    << IMPROVED
+Emphysema            | 0.0000     | 0.0984     | +0.0984    << IMPROVED
+Fibrosis             | 0.0000     | 0.0519     | +0.0519    << IMPROVED
+Pleural_Thickening   | 0.0000     | 0.0606     | +0.0606    << IMPROVED
+Hernia               | 0.0000     | 0.0268     | +0.0268    [TARGET]
+========================================
+Comparison chart saved to: D:\Documents\GitHub\teknofest_xray_sim\logs\comparison.png

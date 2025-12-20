@@ -25,7 +25,7 @@ MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models')
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
 
 
-BEST_MODEL_PATH = os.path.join(MODEL_OUTPUT_DIR, 'v2_best_model.pth')
+BEST_MODEL_PATH_V2 = os.path.join(MODEL_OUTPUT_DIR, 'v2_model_ep7.pth')
 
 
 CLASS_NAMES = [
