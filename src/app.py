@@ -14,7 +14,7 @@ sys.path.append(project_root)
 try:
     from src import predict
     from src.utils import config
-    from src import gradcam
+    from src.utils import gradcam
 
     GRADCAM_AVAILABLE = True
 except ImportError as e:
