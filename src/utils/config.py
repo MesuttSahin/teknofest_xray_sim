@@ -25,7 +25,7 @@ MODEL_OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'models')
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
 
 
-BEST_MODEL_PATH = os.path.join(MODEL_OUTPUT_DIR, 'v2_best_model.pth')
+BEST_MODEL_PATH_V2 = os.path.join(MODEL_OUTPUT_DIR, 'v2_model_ep7.pth')
 
 
 CLASS_NAMES = [
@@ -64,3 +64,5 @@ POS_WEIGHTS = [
     7.40, 38.28, 6.84, 4.01, 17.71, 15.33, 60.03,
     22.47, 20.80, 45.67, 39.07, 69.84, 31.52, 494.88
 ]
+
+BEST_MODEL_PATH = BEST_MODEL_PATH_V2
